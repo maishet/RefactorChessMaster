@@ -29,7 +29,7 @@ public class Knight extends ChessGamePiece {
      * @return ArrayList<String> a list of the possible moves
      */
     private ArrayList<String> calculateNorthMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         for ( int i = 2; i >= -2; i -= 4 ){
             for ( int j = 1; j >= -1; j -= 2 ){
                 if ( isOnScreen( pieceRow + i, pieceColumn + j )
@@ -53,7 +53,7 @@ public class Knight extends ChessGamePiece {
      * @return ArrayList<String> a list of the possible moves
      */
     private ArrayList<String> calculateSouthMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         for ( int i = 1; i >= -1; i -= 2 ){
             for ( int j = 2; j >= -2; j -= 4 ){
                 if ( isOnScreen( pieceRow + i, pieceColumn + j )
@@ -77,7 +77,7 @@ public class Knight extends ChessGamePiece {
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         if ( isPieceOnScreen() ){
             moves.addAll( calculateNorthMoves( board ) );
             moves.addAll( calculateSouthMoves( board ) );

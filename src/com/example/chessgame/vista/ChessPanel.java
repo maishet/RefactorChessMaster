@@ -13,7 +13,7 @@ public class ChessPanel extends JPanel{
     private ChessGameLog gameLog;
     private ChessGraveyard playerOneGraveyard;
     private ChessGraveyard  playerTwoGraveyard;
-    private ChessGameEngine gameEngine;
+    private transient ChessGameEngine gameEngine;
     // ----------------------------------------------------------
     /**
      * Create a new ChessPanel object.
