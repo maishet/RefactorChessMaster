@@ -66,7 +66,7 @@ public class ChessMenuBar extends JMenuBar{
     /**
      * Takes an appropriate action if the about button is clicked.
      */
-    private void aboutHandler(){
+    public void aboutHandler(){
         JOptionPane.showMessageDialog(
                 this.getParent(),
                 "YetAnotherChessGame v1.0 by:\nBen Katz\nMyles David\n"
@@ -75,7 +75,7 @@ public class ChessMenuBar extends JMenuBar{
     /**
      * Takes an appropriate action if the restart button is clicked.
      */
-    private void restartHandler(){
+    public void restartHandler(){
         ( (ChessPanel)this.getParent() ).getGameEngine().reset();
     }
     /**
@@ -83,7 +83,7 @@ public class ChessMenuBar extends JMenuBar{
      * Uses Tony Allevato's code for exiting a GUI app without System.exit()
      * calls.
      */
-    private void exitHandler(){
+    public void exitHandler(){
         JOptionPane.showMessageDialog( this.getParent(), "Thanks for leaving"
                 + ", quitter! >:(" );
         Component possibleFrame = this;
@@ -91,13 +91,14 @@ public class ChessMenuBar extends JMenuBar{
             possibleFrame = possibleFrame.getParent();
         }
         JFrame frame = (JFrame)possibleFrame;
+        assert frame != null;
         frame.setVisible( false );
         frame.dispose();
     }
     /**
      * Takes an appropriate action if the toggle graveyard button is clicked.
      */
-    private void toggleGraveyardHandler(){
+    public void toggleGraveyardHandler(){
         ( (ChessPanel)this.getParent() ).getGraveyard( 1 ).setVisible(
                 !( (ChessPanel)this.getParent() ).getGraveyard( 1 ).isVisible() );
         ( (ChessPanel)this.getParent() ).getGraveyard( 2 ).setVisible(
@@ -106,7 +107,7 @@ public class ChessMenuBar extends JMenuBar{
     /**
      * Takes an appropriate action if the toggle game log button is clicked.
      */
-    private void toggleGameLogHandler(){
+    public void toggleGameLogHandler(){
         ( (ChessPanel)this.getParent() ).getGameLog().setVisible(
                 !( (ChessPanel)this.getParent() ).getGameLog().isVisible() );
         ( (ChessPanel)this.getParent() ).revalidate();

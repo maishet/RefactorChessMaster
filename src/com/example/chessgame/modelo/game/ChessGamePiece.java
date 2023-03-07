@@ -126,18 +126,13 @@ public abstract class ChessGamePiece{
             int numMoves ){
         ArrayList<String> moves = new ArrayList<>();
         int count = 0;
-        if ( isPieceOnScreen() ){
-            for ( int i = pieceRow + 1; i < 8 && count < numMoves; i++ ){
-                if ( ( board.getCell( i, pieceColumn ).getPieceOnSquare()
-                        == null || isEnemy( board, i, pieceColumn ) ) ){
-                    moves.add( i + "," + pieceColumn );
+        if (isPieceOnScreen()) {
+            for (int i = pieceRow + 1; i < 8 && count < numMoves && (board.getCell(i, pieceColumn).getPieceOnSquare() == null || isEnemy(board, i, pieceColumn)); i++) {
+                if (board.getCell(i, pieceColumn).getPieceOnSquare() == null || isEnemy(board, i, pieceColumn)) {
+                    moves.add(i + "," + pieceColumn);
                     count++;
-                    if ( isEnemy( board, i, pieceColumn ) ){
-                        break;
-                    }
                 }
-                else
-                {
+                if (isEnemy(board, i, pieceColumn)) {
                     break;
                 }
             }

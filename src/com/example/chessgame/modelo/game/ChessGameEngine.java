@@ -108,20 +108,10 @@ public class ChessGameEngine{
         {
             return false;
         }
-        if ( currentPlayer == 2 ) // black player
-        {
-            if ( currentPiece.getColorOfPiece() == ChessGamePiece.BLACK ){
-                return true;
-            }
-            return false;
-        }
-        else
-        // white player
-        {
-            if ( currentPiece.getColorOfPiece() == ChessGamePiece.WHITE ){
-                return true;
-            }
-            return false;
+        if (currentPlayer == 2) {
+            return currentPiece.getColorOfPiece() == ChessGamePiece.BLACK;
+        } else {
+            return currentPiece.getColorOfPiece() == ChessGamePiece.WHITE;
         }
     }
     /**
@@ -164,7 +154,6 @@ public class ChessGameEngine{
         else
         {
             board.resetBoard( false );
-            // System.exit(0);
         }
     }
     /**
