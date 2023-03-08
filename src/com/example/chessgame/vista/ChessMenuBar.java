@@ -1,88 +1,73 @@
 package com.example.chessgame.vista;
 import java.awt.Component;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
-public class ChessMenuBar extends JMenuBar{
-    // ----------------------------------------------------------
-    /**
-     * Create a new ChessMenuBar object.
-     */
-    public ChessMenuBar(){
+public class ChessMenuBar extends JMenuBar {
+    private List<MenuObserver> observers = new ArrayList<>();
+
+    public ChessMenuBar() {
         String[] menuCategories = { "File", "Options", "Help" };
-        String[] menuItemLists =
-                { "New game/restart,Exit", "Toggle graveyard,Toggle game log",
-                        "About" };
-        for ( int i = 0; i < menuCategories.length; i++ ){
-            JMenu currMenu = new JMenu( menuCategories[i] );
-            String[] currMenuItemList = menuItemLists[i].split( "," );
-            for ( int j = 0; j < currMenuItemList.length; j++ ){
-                JMenuItem currItem = new JMenuItem( currMenuItemList[j] );
-                currItem.addActionListener( new MenuListener() );
-                currMenu.add( currItem );
+        String[] menuItemLists = { "New game/restart,Exit", "Toggle graveyard,Toggle game log", "About" };
+        for (int i = 0; i < menuCategories.length; i++) {
+            JMenu currMenu = new JMenu(menuCategories[i]);
+            String[] currMenuItemList = menuItemLists[i].split(",");
+            for (int j = 0; j < currMenuItemList.length; j++) {
+                JMenuItem currItem = new JMenuItem(currMenuItemList[j]);
+                currItem.addActionListener(event -> notifyObservers(currItem.getText()));
+                currMenu.add(currItem);
             }
-            this.add( currMenu );
+            this.add(currMenu);
         }
     }
-    /**
-     * Listener for the north menu bar.
-     *
-     * @author Ben Katz (bakatz)
-     * @author Myles David II (davidmm2)
-     * @author Danielle Bushrow (dbushrow)
-     * @version 2010.11.17
-     */
-    private class MenuListener
-            implements ActionListener
-    {
-        /**
-         * Takes an appropriate action based on which menu button is clicked
-         *
-         * @param event
-         *            the mouse event from the source
-         */
+
+    public void addObserver(MenuObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(MenuObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers(String buttonName) {
+        for (MenuObserver observer : observers) {
+            observer.menuItemClicked(buttonName);
+        }
+    }
+
+    public interface MenuObserver {
+        void menuItemClicked(String buttonName);
+    }
+
+    public class ChessMenuHandler implements MenuObserver {
+
         @Override
-        public void actionPerformed( ActionEvent event ){
-            String buttonName = ( (JMenuItem)event.getSource() ).getText();
-            if ( buttonName.equals( "About" ) ){
+        public void menuItemClicked(String buttonName) {
+            if (buttonName.equals("About")) {
                 aboutHandler();
-            }
-            else if ( buttonName.equals( "New game/restart" ) ){
+            } else if (buttonName.equals("New game/restart")) {
                 restartHandler();
-            }
-            else if ( buttonName.equals( "Toggle game log" ) ){
+            } else if (buttonName.equals("Toggle game log")) {
                 toggleGameLogHandler();
-            }
-            else if ( buttonName.equals( "Exit" ) ){
+            } else if (buttonName.equals("Exit")) {
                 exitHandler();
-            }
-            else
-            {
+            } else {
                 toggleGraveyardHandler();
             }
         }
+
     }
-    // ----------------------------------------------------------
-    /**
-     * Takes an appropriate action if the about button is clicked.
-     */
     public void aboutHandler(){
         JOptionPane.showMessageDialog(
                 this.getParent(),
                 "YetAnotherChessGame v1.0 by:\nBen Katz\nMyles David\n"
                         + "Danielle Bushrow\n\nFinal Project for CS2114 @ VT" );
     }
-    /**
-     * Takes an appropriate action if the restart button is clicked.
-     */
     public void restartHandler(){
         ( (ChessPanel)this.getParent() ).getGameEngine().reset();
     }
-    /**
-     * Takes an appropriate action if the exit button is clicked.
-     * Uses Tony Allevato's code for exiting a GUI app without System.exit()
-     * calls.
-     */
     public void exitHandler(){
         JOptionPane.showMessageDialog( this.getParent(), "Thanks for leaving"
                 + ", quitter! >:(" );
@@ -95,9 +80,6 @@ public class ChessMenuBar extends JMenuBar{
         frame.setVisible( false );
         frame.dispose();
     }
-    /**
-     * Takes an appropriate action if the toggle graveyard button is clicked.
-     */
     public void toggleGraveyardHandler(){
         ( (ChessPanel)this.getParent() ).getGraveyard( 1 ).setVisible(
                 !( (ChessPanel)this.getParent() ).getGraveyard( 1 ).isVisible() );
@@ -113,3 +95,4 @@ public class ChessMenuBar extends JMenuBar{
         ( (ChessPanel)this.getParent() ).revalidate();
     }
 }
+

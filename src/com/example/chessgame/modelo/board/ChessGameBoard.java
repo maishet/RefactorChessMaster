@@ -10,6 +10,14 @@ import com.example.chessgame.modelo.game.ChessGamePiece;
 import com.example.chessgame.modelo.pieces.*;
 import com.example.chessgame.vista.ChessPanel;
 public class ChessGameBoard extends JPanel{
+    public BoardSquare[][] getChessCells() {
+        return chessCells;
+    }
+
+    public void setChessCells(BoardSquare[][] chessCells) {
+        this.chessCells = chessCells;
+    }
+
     private BoardSquare[][] chessCells;
     private transient BoardListener listener;
     // ----------------------------------------------------------
@@ -27,7 +35,7 @@ public class ChessGameBoard extends JPanel{
      * @param col the column to check
      * @return boolean true if they are valid, false otherwise
      */
-    private boolean validateCoordinates( int row, int col ){
+    boolean validateCoordinates(int row, int col){
         return chessCells.length > 0 && chessCells[0].length > 0 &&
                 row < chessCells.length && col < chessCells[0].length
                 && row >= 0 && col >= 0;
